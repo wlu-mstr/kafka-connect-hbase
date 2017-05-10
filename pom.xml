@@ -10,13 +10,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hbase.version>1.2.0</hbase.version>
-        <hadoop.version>2.6.0</hadoop.version>
-        <kafka.version>0.9.0.0</kafka.version>
+        <hbase.version>1.2.0-cdh5.10.1</hbase.version>
+        <hadoop.version>2.6.0-cdh5.10.1</hadoop.version>
+        <kafka.version>0.10.0-kafka-2.1.0</kafka.version>
         <junit.version>4.11</junit.version>
         <hadoop.mvn.version>2.7.1</hadoop.mvn.version>
         <guava.version>16.0</guava.version>
-        <confluent.version>2.0.0</confluent.version>
+        <confluent.version>3.2.0</confluent.version>
     </properties>
 
     <repositories>
@@ -24,6 +24,10 @@
             <id>confluent</id>
             <name>Confluent</name>
             <url>http://packages.confluent.io/maven/</url>
+        </repository>
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
     </repositories>
 
@@ -78,12 +82,22 @@
             		<artifactId>avro</artifactId>
             		<groupId>org.apache.avro</groupId>
             	</exclusion>
+                <exclusion>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                    <groupId>org.codehaus.jackson</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
             <version>${hbase.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                    <groupId>org.codehaus.jackson</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.hbase</groupId>
@@ -127,7 +141,7 @@
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
-            <version>1.7.7</version>
+            <version>1.8.1</version>
         </dependency>
     </dependencies>
 

@@ -22,7 +22,6 @@ import io.svectors.hbase.parser.EventParser;
 import org.apache.kafka.common.config.AbstractConfig;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.config.ConfigException;
-import org.apache.kafka.connect.runtime.ConnectorConfig;
 
 import java.util.Map;
 
@@ -33,6 +32,7 @@ public class HBaseSinkConfig extends AbstractConfig {
 
     public static final String ZOOKEEPER_QUORUM_CONFIG = "zookeeper.quorum";
     public static final String EVENT_PARSER_CONFIG = "event.parser.class";
+    public static final String TOPICS_CONFIG = "topics";
     public static String DEFAULT_HBASE_ROWKEY_DELIMITER = ",";
     public static String DEFAULT_HBASE_COLUMN_FAMILY = "d";
 
@@ -71,7 +71,7 @@ public class HBaseSinkConfig extends AbstractConfig {
      * Validates the properties to ensure the rowkey property is configured for each table.
      */
     public void validate() {
-        final String topicsAsStr = properties.get(ConnectorConfig.TOPICS_CONFIG);
+        final String topicsAsStr = properties.get(TOPICS_CONFIG);
         final String[] topics = topicsAsStr.split(",");
         for(String topic : topics) {
             String key = String.format(TABLE_ROWKEY_COLUMNS_TEMPLATE, topic);

@@ -18,6 +18,7 @@
 package io.svectors.hbase.sink;
 
 import com.google.common.collect.Lists;
+import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.sink.SinkConnector;
 
@@ -59,5 +60,10 @@ public class HBaseSinkConnector extends SinkConnector {
     @Override
     public void stop() {
         // NO-OP
+    }
+
+    @Override
+    public ConfigDef config() {
+        return null;
     }
 }
