@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hbase.version>1.2.0-cdh5.10.1</hbase.version>
         <hadoop.version>2.6.0-cdh5.10.1</hadoop.version>
-        <kafka.version>0.10.0-kafka-2.1.0</kafka.version>
+        <kafka.version>0.10.2.0</kafka.version>
         <junit.version>4.11</junit.version>
         <hadoop.mvn.version>2.7.1</hadoop.mvn.version>
         <guava.version>16.0</guava.version>
