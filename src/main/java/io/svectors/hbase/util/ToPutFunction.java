@@ -138,6 +138,9 @@ public class ToPutFunction implements Function<SinkRecord, Put> {
             if(rowkey == null) {
                 rowkey = columnValue;
             } else {
+                if (null == columnValue) {
+                    columnValue = new byte[] {'N','A'};
+                }
                 rowkey = Bytes.add(rowkey, delimiterBytes, columnValue);
             }
         }
