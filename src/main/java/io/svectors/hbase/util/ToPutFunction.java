@@ -53,6 +53,7 @@ public class ToPutFunction implements Function<SinkRecord, Put> {
     @Override
     public Put apply(final SinkRecord sinkRecord) {
         Preconditions.checkNotNull(sinkRecord);
+        System.out.println(sinkRecord);
         final String table = sinkRecord.topic();
         final String columnFamily = columnFamily(table);
         final String delimiter = rowkeyDelimiter(table);
@@ -60,6 +61,18 @@ public class ToPutFunction implements Function<SinkRecord, Put> {
         final Map<String, byte[]> valuesMap  = this.eventParser.parseValue(sinkRecord);
         final Map<String, byte[]> keysMap = this.eventParser.parseKey(sinkRecord);
 
+        keysMap.entrySet().stream().forEach( e -> {
+            System.out.println(e.getKey() + "  key ---   " + Bytes.toString(e.getValue()));
+        });
+
+        valuesMap.entrySet().stream().forEach( e -> {
+            System.out.println(e.getKey() + "  value ---   " + Bytes.toString(e.getValue()));
+        });
+
+        if (valuesMap.isEmpty() || keysMap.isEmpty()) {
+            System.out.println("can't cons a Put");
+            return null;
+        }
         valuesMap.putAll(keysMap);
         final String[] rowkeyColumns = rowkeyColumns(table);
         final byte[] rowkey = toRowKey(valuesMap, rowkeyColumns, delimiter);

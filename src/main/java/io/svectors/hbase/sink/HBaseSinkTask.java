@@ -36,6 +36,7 @@ import org.apache.kafka.connect.sink.SinkTask;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import io.svectors.hbase.config.HBaseSinkConfig;
 
@@ -74,11 +75,13 @@ public class HBaseSinkTask extends SinkTask {
 
         Map<String, List<Put>> byTable = byTopic.entrySet().stream()
           .collect(toMap(Map.Entry::getKey,
-                         (e) -> e.getValue().stream().map(sr -> toPutFunction.apply(sr)).collect(toList())));
+                         (e) -> e.getValue().stream().map(sr -> toPutFunction.apply(sr))
+                                 .filter(Objects::nonNull).collect(toList())));
 
-        byTable.entrySet().parallelStream().forEach(entry -> {
-            hBaseClient.write(entry.getKey(), entry.getValue());
-        });
+        byTable.entrySet().parallelStream().filter(e -> !e.getValue().isEmpty())
+                .forEach(entry -> {
+                    hBaseClient.write(entry.getKey(), entry.getValue());
+                });
     }
 
     @Override
