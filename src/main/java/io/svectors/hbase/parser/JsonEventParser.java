@@ -55,7 +55,7 @@ public class JsonEventParser implements EventParser {
         this.valueConverter = new JsonConverter();
 
         Map<String, String> props = new HashMap<>(1);
-        props.put("schemas.enable", Boolean.FALSE.toString());
+        // props.put("schemas.enable", Boolean.FALSE.toString());
 
         this.keyConverter.configure(props, true);
         this.valueConverter.configure(props, false);
